@@ -3,7 +3,7 @@ import myLogo from "../images/logo.svg";
 import { IoIosCart } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 
-export default function Nav() {
+export default function Nav({cart}) {
   return (
     <nav>
       <div className="container mx-auto flex justify-between items-center relative z-10">
@@ -23,8 +23,8 @@ export default function Nav() {
               <IoIosCart />
             </li>
 
-            <span className="flex justify-center align-middle bg-[#45C9A1] rounded-[50%]  w-[20px] absolute bottom-7 left-6 text-white  ">
-              0
+            <span className="flex justify-center align-middle bg-[#45C9A1] rounded-[50%]  w-[20px] absolute bottom-7 left-6 text-white  cursor-pointer">
+              {cart && cart.length}
             </span>
           </div>
           <li className="list-none p-3">Sign Up</li>

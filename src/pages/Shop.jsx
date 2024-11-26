@@ -28,8 +28,8 @@ import denim from "../images/denim.png";
 export default function Features() {
   return (
     <div>
-      <div className="flex container mx-auto pl-10 border-[red] border- gap-5">
-        <input className=" border-l-red-600" type="text" placeholder="Search Products and categories" />
+      <div className="flex container justify-center align-middle rounded-full shadow-amber-950 mx-auto pl-10 border-red-600">
+        <input className="w-[50%]" type="text" placeholder="Search Products and categories" />
         <h4>Filter Category</h4>
       </div>
       <div className="container mx-auto flex gap-4 flex-wrap">

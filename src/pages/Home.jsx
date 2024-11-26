@@ -5,13 +5,16 @@ import Categories from "../components/Categories";
 import Features from "../components/Features";
 import Collections from "../components/Collections";
 
-export default function Home() {
+export default function Home({cart, setCart}) {
+
   return (
     <div>
-      <Hero />
+      <Hero/>
       <Categories/>
-      <Features/>
+      <Features cart={cart} setCart={setCart}/>
       <Collections/>
     </div>
   );
 }
+
+
