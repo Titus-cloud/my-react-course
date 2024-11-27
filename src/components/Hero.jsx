@@ -1,5 +1,6 @@
 import myBcolor from "../images/hero-background.png";
 import myBimg from "../images/hero-image.png";
+import { Link } from "react-router-dom";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 
 export default function Hero() {
@@ -23,9 +24,9 @@ export default function Hero() {
           </p>
         </div>
         <div className="flex align-middle pt-5 gap-10">
-          <button className="bg-[#45C9A1] text-[#F0EFEF] w-32 h-10 font-bold text-sm rounded-3xl">
+         <Link to="shop" > <button className="bg-[#45C9A1] text-[#F0EFEF] w-32 h-10 font-bold text-sm rounded-3xl">
             Shop Now
-          </button>
+          </button></Link>
           <button className="text-[#45C9A1] bg-[#fff] text-sm font-bold drop-shadow-md w-32 rounded-3xl">
             About Us
           </button>

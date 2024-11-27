@@ -12,7 +12,6 @@ import ProductDetail from "./ProductDetail";
 
 import { useState } from "react";
 
-
 export default function Router() {
   const [cart, setCart] = useState([]);
   return (
@@ -21,8 +20,8 @@ export default function Router() {
         <Route
           path="/"
           element={
-            <Layout cart={cart} >
-              <Home cart={cart} setCart={setCart}/>
+            <Layout cart={cart}>
+              <Home cart={cart} setCart={setCart} />
             </Layout>
           }
         />
@@ -66,7 +65,7 @@ export default function Router() {
           path="cart"
           element={
             <Layout>
-              <Cart />
+              <Cart cart={cart} />
             </Layout>
           }
         />
@@ -75,7 +74,7 @@ export default function Router() {
           path="shop"
           element={
             <Layout>
-              <Shop />
+              <Shop cart={cart} setCart={setCart} />
             </Layout>
           }
         />
@@ -84,7 +83,7 @@ export default function Router() {
           path="detail"
           element={
             <Layout>
-              <ProductDetail />
+              <ProductDetail cart={cart} setCart={setCart} />
             </Layout>
           }
         />
