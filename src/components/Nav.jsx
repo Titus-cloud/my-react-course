@@ -2,7 +2,7 @@ import myLogo from "../images/logo.svg";
 import { Link } from "react-router-dom";
 import { IoIosCart } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
-import Cart from "./Cart";
+import Cart from "../pages/Cart";
 
 export default function Nav({ cart }) {
   return (
@@ -28,7 +28,6 @@ export default function Nav({ cart }) {
 
         <div className="flex items-center relative md:flex hidden lg:flex">
           <div className="h-10 w-10">
-
             {/* Come and update the path */}
             <Link to="cart">
               <li className="list-none text-center text-4xl  ">

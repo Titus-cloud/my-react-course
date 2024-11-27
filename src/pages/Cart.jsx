@@ -1,6 +1,13 @@
-import CartItem from "./CartItem";
+import CartItem from "../components/CartItem";
+import CartSummary from "../components/CartSummary";
+import { useState, useEffect } from "react";
 
 export default function Cart({ cart }) {
+  const [cartCopy, setCartCopy] = useState([]);
+  useEffect(() => {
+    const copy = [...cart];
+    setCartCopy(copy);
+  }, []);
   return (
     <div className="container mx-auto py-10 flex space-x-8">
       {/* Left - Cart Items */}
@@ -14,6 +21,8 @@ export default function Cart({ cart }) {
         {cart.length > 0 ? (
           cart.map((item, index) => (
             <CartItem
+              cartCopy={cartCopy}
+              setCartCopy={setCartCopy}
               key={index}
               img={item.img}
               name={item.name}
@@ -28,15 +37,19 @@ export default function Cart({ cart }) {
       </div>
 
       {/* Right - Cart Summary */}
-      {/* <div className="w-1/3">
+      <div className="w-1/3">
         <CartSummary
-          subtotal={`KSh ${cart.reduce((sum, item) => sum + item.price * item.quantity, 0)}`}
+          subtotal={`KSh ${cart.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+          )}`}
           deliveryFee="KSh 450"
           total={`KSh ${
-            cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + 450
+            cart.reduce((sum, item) => sum + item.price * item.quantity, 0) +
+            450
           }`}
         />
-      </div> */}
+      </div>
     </div>
   );
 }

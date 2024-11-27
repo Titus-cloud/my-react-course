@@ -6,7 +6,7 @@ import Layout from "../pages/Layout";
 import AddNewPro from "../pages/AddNewPro";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
-import Cart from "../components/Cart";
+import Cart from "../pages/Cart";
 import Shop from "../pages/Shop";
 import ProductDetail from "./ProductDetail";
 

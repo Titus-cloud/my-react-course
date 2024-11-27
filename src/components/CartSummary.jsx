@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 export default function CartSummary({ subtotal, deliveryFee, total }) {
   return (
     <div className="bg-gray-100 p-4 rounded-md">
