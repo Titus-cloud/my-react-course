@@ -2,6 +2,7 @@ import myBcolor from "../images/hero-background.png";
 import myBimg from "../images/hero-image.png";
 import { Link } from "react-router-dom";
 import { HiMagnifyingGlass } from "react-icons/hi2";
+import shop from "../pages/Shop"
 
 export default function Hero() {
   return (

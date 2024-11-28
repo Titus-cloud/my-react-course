@@ -10,10 +10,20 @@ import Cart from "../pages/Cart";
 import Shop from "../pages/Shop";
 import ProductDetail from "./ProductDetail";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 
 export default function Router() {
   const [cart, setCart] = useState([]);
+  useEffect(()=>{
+    const cartData = JSON.parse(localStorage.getItem("cart"))
+    cartData && setCart(cartData)
+  },[])
+  useEffect(()=>{
+    if(cart && cart.length !== 0){
+      localStorage.setItem("cart",JSON.stringify(cart))
+    }
+  },[cart])
   return (
     <BrowserRouter>
       <Routes>

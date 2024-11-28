@@ -1,22 +1,17 @@
-export default function Feature({ img, span, name, price, cart, setCart }) {
-  function handleAddToCart(e, product) {
-    // Check if the product already exists in the cart
-    const itemExists = cart.find((item) => item.name === product.name);
+export default function Feature({ img, span, name, price, cart = [], setCart }) {
+  // Helper function to check if a product exists in the cart
+  const getCartItem = (productName) => cart.find((item) => item.name === productName);
 
-    if (!itemExists) {
-      // Update the cart state
+  // Add product to the cart if it doesn't already exist
+  function handleAddToCart(product) {
+    if (!getCartItem(product.name)) {
       const updatedCart = [...cart, { ...product, quantity: 1 }];
       setCart(updatedCart);
-
-      // Change button state
-      e.target.textContent = "Added to Cart";
-      e.target.style.backgroundColor = "red";
-      e.target.style.color = "white";
-    } else {
-      // Optional: Handle product already in cart (e.g., notify user)
-      alert("This product is already in your cart.");
     }
   }
+
+  // Ensure cart is an array before checking
+  const isInCart = Array.isArray(cart) && Boolean(getCartItem(name));
 
   return (
     <div className="mx-auto py-10 flex relative">
@@ -39,14 +34,15 @@ export default function Feature({ img, span, name, price, cart, setCart }) {
           <p className="text-center">Ksh. {price.toLocaleString()}</p>
         </div>
       </div>
-      
 
       {/* Add to Cart Button */}
       <button
-        className="absolute bottom-[6rem] left-[] transform-translate-x-1/2 bg-[#45C9A1] text-white px-8 py-1 rounded opacity-0 hover:opacity-100 w-[11rem]"
-        onClick={(e) => handleAddToCart(e, { name, price, img })}
+        className={`absolute bottom-[6rem] px-8 py-1 rounded w-[11rem] 
+          ${isInCart ? "bg-red-500 text-white" : "bg-[#45C9A1] text-white"}
+          opacity-0 hover:opacity-100 transition-opacity`}
+        onClick={() => handleAddToCart({ name, price, img })}
       >
-        Add To Cart
+        {isInCart ? "Added to Cart" : "Add To Cart"}
       </button>
     </div>
   );
