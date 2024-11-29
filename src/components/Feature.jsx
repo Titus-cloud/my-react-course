@@ -1,3 +1,6 @@
+import { FaRegTrashCan } from "react-icons/fa6";
+
+
 export default function Feature({ img, span, name, price, cart = [], setCart }) {
   // Helper function to check if a product exists in the cart
   const getCartItem = (productName) => cart.find((item) => item.name === productName);
@@ -8,13 +11,14 @@ export default function Feature({ img, span, name, price, cart = [], setCart }) 
       const updatedCart = [...cart, { ...product, quantity: 1 }];
       setCart(updatedCart);
     }
+    
   }
 
   // Ensure cart is an array before checking
   const isInCart = Array.isArray(cart) && Boolean(getCartItem(name));
 
   return (
-    <div className="mx-auto py-10 flex relative">
+    <div className="mx-auto py-10 flex relative group">
       <div className="w-[11rem]">
         {/* Product Image */}
         <div className="bg-[#F0EFEF] flex justify-center m-auto items-center h-[14rem]">
@@ -39,7 +43,7 @@ export default function Feature({ img, span, name, price, cart = [], setCart }) 
       <button
         className={`absolute bottom-[6rem] px-8 py-1 rounded w-[11rem] 
           ${isInCart ? "bg-red-500 text-white" : "bg-[#45C9A1] text-white"}
-          opacity-0 hover:opacity-100 transition-opacity`}
+          opacity-0 group-hover:opacity-100`}
         onClick={() => handleAddToCart({ name, price, img })}
       >
         {isInCart ? "Added to Cart" : "Add To Cart"}

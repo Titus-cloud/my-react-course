@@ -1,3 +1,5 @@
+import { FaRegTrashCan } from "react-icons/fa6";
+
 import { useState } from "react";
 
 export default function CartItem({
@@ -5,6 +7,8 @@ export default function CartItem({
   name,
   size,
   price,
+  cart,
+  setCart,
   quantity,
   cartCopy,
   setCartCopy,
@@ -14,19 +18,37 @@ export default function CartItem({
       const copy = [...cartCopy];
       copy.push(product);
       setCartCopy(copy);
-      console.log(img, name, price);
     }
-    if (action === "decrement"){
-      const copy = [...cartCopy]
-      const productIndex = copy.indexOf(product)
-      copy.splice(productIndex, 1)
-      setCartCopy(copy)
+    if (action === "decrement") {
+      const copy = [...cartCopy];
+      const productIndex = copy.indexOf(product);
+      let prodIndex;
+
+      copy.find((item, index) => {
+        if (item.name === name) {
+          prodIndex = index;
+        }
+      });
+
+      console.log(prodIndex);
+
+      copy.splice(prodIndex, 1);
+      setCartCopy(copy);
+    }
+    if (action === "delete") {
+      // console.log(cart);
+      const copy =cart && [...cart]
+      const filteredCart = copy
+        .filter((item) => {
+          return item.name !== name})
+          console.log(filteredCart);
+          setCart(filteredCart);
     }
   }
 
   return (
-    <div className="flex items-center justify-between border-b py-4">
-      {console.log(cartCopy)}
+    <div className="flex items-center justify-between border-b py-4 group">
+      {/* {console.log(cartCopy)} */}
 
       <div className="flex flex-1 items-center space-x-4 px-5">
         <img src={img} alt={name} className="w-[3rem] h-[4rem] object-cover" />
@@ -36,7 +58,16 @@ export default function CartItem({
         </div>
       </div>
       <div className="flex flex-1 items-center space-x-2">
-        <button className="px-2 py-1 border rounded cursor-pointer" onClick={()=> handleCartItem ("decrement")} disabled={cartCopy.filter(item=> item.name === name).length === 1} >-</button>
+        <button
+          className="px-2 py-1 border rounded cursor-pointer"
+          onClick={() => handleCartItem("decrement", { img, name, price })}
+          disabled={
+            cartCopy &&
+            cartCopy.filter((item) => item.name === name).length === 1
+          }
+        >
+          -
+        </button>
         <span>
           {cartCopy && cartCopy.filter((item) => item.name === name).length}
         </span>
@@ -49,13 +80,20 @@ export default function CartItem({
       </div>
       <div className="flex-1">
         <p className="text-gray-700">
-          
-          Ksh. {cartCopy
+          Ksh.{" "}
+          {cartCopy &&
+            cartCopy
               .filter((item) => item.price === price)
-              .reduce((sum, item) => sum + item.price, 0).toLocaleString()}
-        
+              .reduce((sum, item) => sum + item.price, 0)
+              .toLocaleString()}
         </p>
       </div>
+      <p
+        className="text-red-600 pr-10 opacity-0 group-hover:opacity-100 cursor-pointer"
+        onClick={() => handleCartItem("delete")}
+      >
+        <FaRegTrashCan />
+      </p>
     </div>
   );
 }

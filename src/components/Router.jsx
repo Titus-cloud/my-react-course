@@ -12,18 +12,17 @@ import ProductDetail from "./ProductDetail";
 
 import { useState, useEffect } from "react";
 
-
 export default function Router() {
   const [cart, setCart] = useState([]);
-  useEffect(()=>{
-    const cartData = JSON.parse(localStorage.getItem("cart"))
-    cartData && setCart(cartData)
-  },[])
-  useEffect(()=>{
-    if(cart && cart.length !== 0){
-      localStorage.setItem("cart",JSON.stringify(cart))
+  useEffect(() => {
+    const cartData = JSON.parse(localStorage.getItem("cart"));
+    cartData && setCart(cartData);
+  }, []);
+  useEffect(() => {
+    if (cart && cart.length !== 0) {
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
-  },[cart])
+  }, [cart]);
   return (
     <BrowserRouter>
       <Routes>
@@ -75,10 +74,19 @@ export default function Router() {
           path="cart"
           element={
             <Layout>
-              <Cart cart={cart} />
+              <Cart cart={cart} setCart={setCart} />
             </Layout>
           }
         />
+
+        {/* <Route
+          path="setCart"
+          element={
+            <Layout>
+              <Cart cart={setCart} />
+            </Layout>
+          }
+        /> */}
 
         <Route
           path="shop"
