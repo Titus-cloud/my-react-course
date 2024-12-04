@@ -3,6 +3,7 @@ import { BsCartXFill } from "react-icons/bs";
 import CartItem from "../components/CartItem";
 import CartSummary from "../components/CartSummary";
 import { Link } from "react-router-dom";
+// import {getFilteredArray, getTotals, } from "../lib/Lib"
 import shop from "./Shop";
 
 export default function Cart({ cart, setCart }) {
@@ -16,7 +17,7 @@ export default function Cart({ cart, setCart }) {
       setCartCopy(cartCoppyItem);
       return;
     } else {
-      setCartCopy([...cartItem]);
+      cartItem && setCartCopy([...cartItem]);
     }
   }, []);
   // Setting the items on the

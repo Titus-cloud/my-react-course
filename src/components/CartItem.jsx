@@ -1,4 +1,5 @@
 import { FaRegTrashCan } from "react-icons/fa6";
+import {getFilteredArray, getTotals} from "../lib/Lib"
 
 import { useState } from "react";
 
@@ -43,6 +44,10 @@ export default function CartItem({
           return item.name !== name})
           console.log(filteredCart);
           setCart(filteredCart);
+          if(filteredCart.length === 0){
+            localStorage.removeItem("cart")
+            localStorage.removeItem("cartCopy")
+          }
     }
   }
 
@@ -62,12 +67,12 @@ export default function CartItem({
           className="px-2 py-1 border rounded cursor-pointer"
           onClick={() => handleCartItem("decrement", { img, name, price })}
           disabled={
-            cartCopy &&
-            cartCopy.filter((item) => item.name === name).length === 1
+            cartCopy && getFilteredArray(cartCopy, name).length === 1
           }
         >
           -
         </button>
+
         <span>
           {cartCopy && cartCopy.filter((item) => item.name === name).length}
         </span>
@@ -82,9 +87,7 @@ export default function CartItem({
         <p className="text-gray-700">
           Ksh.{" "}
           {cartCopy &&
-            cartCopy
-              .filter((item) => item.price === price)
-              .reduce((sum, item) => sum + item.price, 0)
+            getTotals(cartCopy, name)
               .toLocaleString()}
         </p>
       </div>

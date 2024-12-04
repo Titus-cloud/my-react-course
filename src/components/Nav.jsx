@@ -8,7 +8,7 @@ export default function Nav({ cart }) {
   return (
     <nav>
       <div className="container mx-auto flex justify-between items-center content-center relative z-10">
-        <div className="flex relative ">
+        <div className="flex relative items-center justify-between">
           <Link to="/">
             <img className="w-28" src={myLogo} alt="this is the logo" />
           </Link>
