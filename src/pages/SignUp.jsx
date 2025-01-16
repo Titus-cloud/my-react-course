@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
@@ -10,18 +10,15 @@ import { FaXmark } from "react-icons/fa6";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true)
-  // State for password visibility and form data
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({});
   const [error, setError] = useState({});
 
-  // Toggle password visibility
   function handleShowPassword() {
     setShowPassword((prev) => !prev);
   }
 
-  // Handle input change
   function handleChange(e) {
     setFormData((prev) => ({
       ...prev,
@@ -29,12 +26,8 @@ export default function SignUp() {
     }));
   }
 
-{isLoading &&<Loader />}
-
-  // Handle form submission
-  function hundleSignup() {
+  function handleSignup() {
     const errors = {};
-    // Validate fields
     !formData.firstName
       ? (errors.firstName = true)
       : (errors.firstName = false);
@@ -50,7 +43,6 @@ export default function SignUp() {
 
     setError(errors);
 
-    // If no errors, create user
     if (
       !errors.firstName &&
       !errors.lastName &&
@@ -59,26 +51,42 @@ export default function SignUp() {
       !errors.password &&
       !errors.confirmPassword
     ) {
+      setIsLoading(true);
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then((userCredential) => {
           console.log(userCredential.user);
-          navigate("/login"); // Navigate to login page
+          navigate("/login");
         })
         .catch((error) => {
           console.error(error.message);
+          setIsLoading(false);
         });
     }
   }
 
-  // Check if passwords match
+  function handleGoogleSignup() {
+    setIsLoading(true);
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error(error.message);
+        setIsLoading(false);
+      });
+  }
+
   const passwordsMatch =
     formData.password && formData.confirmPassword
       ? formData.password === formData.confirmPassword
       : false;
 
   return (
-    <div className="flex items-center relative justify-between p-2  h-[90vh] ">
-      <div className="flex-1 p-8 ">
+    <div className="flex items-center relative justify-between p-2 h-[90vh]">
+      <div className="flex-1 p-8">
         <h1 className="text-center text-4xl font-bold pb-5">
           Create An Account
         </h1>
@@ -88,7 +96,7 @@ export default function SignUp() {
           </p>
         )}
         <div>
-          <div className="flex items-center gap-8 my-3 ">
+          <div className="flex items-center gap-8 my-3">
             <input
               onChange={handleChange}
               className={`shadow-sm p-3 w-[50%] text-sm rounded-full outline-none mx5 ${
@@ -133,7 +141,6 @@ export default function SignUp() {
             placeholder="Phone Number"
           />
 
-          {/* Password Input */}
           <div className="relative w-full">
             <input
               onChange={handleChange}
@@ -153,7 +160,6 @@ export default function SignUp() {
             </span>
           </div>
 
-          {/* Confirm Password Input */}
           <div className="relative w-full">
             <input
               onChange={handleChange}
@@ -165,9 +171,7 @@ export default function SignUp() {
               type={showPassword ? "text" : "password"}
               placeholder="Confirm Password"
             />
-            <span
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 cursor-pointer"
-            >
+            <span className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500 cursor-pointer">
               {passwordsMatch ? (
                 <TiTick className="text-green-500" />
               ) : (
@@ -177,7 +181,7 @@ export default function SignUp() {
           </div>
 
           <button
-            onClick={hundleSignup}
+            onClick={handleSignup}
             className="w-full bg-[#45C9A1] py-3 px-20 rounded-full text-md font-bold text-white mb-5"
           >
             Create Account
@@ -186,9 +190,12 @@ export default function SignUp() {
 
         <hr />
 
-        <div className=" pt-5 pb-5">
-          <button className="w-full p-3 px-20 rounded-full text-md font-bold text-blue-500 shadow-lg ">
-            Log In with Google
+        <div className="pt-5 pb-5">
+          <button
+            onClick={handleGoogleSignup}
+            className="w-full p-3 px-20 rounded-full text-md font-bold text-blue-500 shadow-lg"
+          >
+            Sign Up with Google
           </button>
         </div>
         <p className="text-sm text-center">
@@ -199,6 +206,7 @@ export default function SignUp() {
       <div className="flex-1 w-full h-[90vh] -z-10">
         <img className="bg-cover" src={sign} alt="sign" />
       </div>
+      {isLoading && <Loader />}
     </div>
   );
 }
