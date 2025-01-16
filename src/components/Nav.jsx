@@ -2,7 +2,7 @@ import myLogo from "../images/logo.svg";
 import { Link } from "react-router-dom";
 import { IoIosCart } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
-import Cart from "../pages/Cart";
+
 
 export default function Nav({ cart }) {
   return (
